@@ -1,0 +1,299 @@
+---
+sidebar: sidebar 
+permalink: task-managing-data-brokers.html 
+keywords: manage data brokers, manage data broker groups, data broker performance, data broker configuration, data broker removal, remove data broker, delete data broker, groups, data broker group, rename data broker group, add data broker, data broker cpu, data broker ram, data broker status, edit group name, change group name, modify group name 
+summary: Un agente de datos sincroniza los datos de una ubicación de origen con una ubicación de destino. Es necesario un agente de datos para cada relación de sincronización que cree. Administrar los agentes de datos añadiendo un nuevo agente de datos a un grupo, visualizando información sobre agentes de datos, etc. 
+---
+= Administrar grupos de agentes de datos
+:toc: macro
+:hardbreaks:
+:allow-uri-read: 
+:toc: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+:toc-position: content
+
+
+[role="lead"]
+Un grupo de agentes de datos sincroniza los datos de una ubicación de origen con una ubicación de destino. Se necesita al menos un agente de datos en un grupo para cada relación de sincronización que cree. Administrar grupos de agentes de datos agregando un nuevo agente de datos a un grupo, visualizando información acerca de los grupos y mucho más.
+
+
+
+== Cómo funcionan los grupos de agentes de datos
+
+Un grupo de agentes de datos puede incluir uno o más agentes de datos. La agrupación conjunta de agentes de datos puede ayudar a mejorar el rendimiento de las relaciones de sincronización.
+
+
+
+=== Los grupos pueden gestionar varias relaciones
+
+Un grupo de Data broker puede gestionar una o más relaciones de sincronización a la vez.
+
+Por ejemplo, digamos que usted tiene tres relaciones:
+
+* La relación 1 está administrada por el grupo De Data broker A
+* La relación 2 es administrada por el grupo de Data broker B
+* La relación 3 está administrada por el grupo de Data broker A
+
+
+Desea acelerar el rendimiento de la relación 1 para agregar un nuevo agente de datos al grupo de intermediarios de datos A. Dado que el grupo A también gestiona la relación de sincronización 3, el rendimiento de sincronización de la relación se acelera automáticamente.
+
+
+
+=== Número de agentes de datos en un grupo
+
+En muchos casos, un único agente de datos puede satisfacer los requisitos de rendimiento de una relación de sincronización. De lo contrario, puede acelerar el rendimiento de sincronización añadiendo agentes de datos adicionales al grupo. Pero primero debe comprobar otros factores que pueden afectar al rendimiento de la sincronización. link:faq.html#how-many-data-brokers-are-required-in-a-group["Obtenga más información sobre cómo determinar cuándo es necesario el uso de varios agentes de datos son obligatorios"].
+
+
+
+== Recomendaciones de seguridad
+
+Para garantizar la seguridad del equipo de intermediarios de datos, NetApp recomienda lo siguiente:
+
+* SSH no debe permitir el reenvío X11
+* SSH no debe permitir el reenvío de conexión TCP
+* SSH no debe permitir túneles
+* SSH no debe aceptar variables de entorno del cliente
+
+
+Estas recomendaciones de seguridad pueden ayudar a evitar conexiones no autorizadas al equipo de intermediarios de datos.
+
+
+
+== Agregar un nuevo agente de datos a un grupo
+
+Hay varias formas de crear un nuevo Data broker:
+
+* Al crear una nueva relación de sincronización
++
+link:task-creating-relationships.html["Aprenda a crear un nuevo agente de datos al crear una relación de sincronización"].
+
+* En la página *gestionar agentes de datos*, haga clic en *Agregar nuevo Data Broker* que crea el agente de datos en un nuevo grupo
+* Desde la página *gestionar agentes de datos* creando un nuevo agente de datos en un grupo existente
+
+
+.Antes de empezar
+* No puede agregar gestores de datos a un grupo que gestione una relación de sincronización cifrada.
+* Si desea crear un agente de datos en un grupo existente, el agente de datos debe ser un agente de datos en las instalaciones o el mismo tipo de agente de datos.
++
+Por ejemplo, si un grupo incluye un agente de datos de AWS, puede crear un agente de datos de AWS o un agente de datos en las instalaciones de ese grupo. No se puede crear un agente de datos de Azure ni un agente de datos de Google Cloud porque no son el mismo tipo de agente de datos.
+
+
+
+.Pasos para crear un agente de datos en un grupo nuevo
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en *Agregar nuevo agente de datos*.
+. Siga las indicaciones para crear el Data broker.
++
+Para obtener ayuda, consulte las siguientes páginas:
+
++
+** link:task-installing-aws.html["Crear un agente de datos en AWS"]
+** link:task-installing-azure.html["Cree un agente de datos en Azure"]
+** link:task-installing-gcp.html["Crear un agente de datos en Google Cloud"]
+** link:task-installing-linux.html["Instalar el agente de datos en un host Linux"]
+
+
+
+
+.Pasos para crear un agente de datos en un grupo existente
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en el menú de acción y seleccione *Agregar agente de datos*.
++
+image:screenshot_sync_group_add.png["Captura de pantalla del menú de acción disponible para cada agente de datos individual de un grupo."]
+
+. Siga las instrucciones para crear el Data broker en el grupo.
++
+Para obtener ayuda, consulte las siguientes páginas:
+
++
+** link:task-installing-aws.html["Crear un agente de datos en AWS"]
+** link:task-installing-azure.html["Cree un agente de datos en Azure"]
+** link:task-installing-gcp.html["Crear un agente de datos en Google Cloud"]
+** link:task-installing-linux.html["Instalar el agente de datos en un host Linux"]
+
+
+
+
+
+
+== Edite el nombre de un grupo
+
+Cambie el nombre de un grupo de Data broker en cualquier momento.
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en el menú de acción y seleccione *Editar nombre de grupo*.
++
+image:screenshot_sync_group_edit.gif["Captura de pantalla del menú de acción disponible para cada agente de datos individual de un grupo."]
+
+. Introduzca un nuevo nombre y haga clic en *Guardar*.
+
+
+.Resultado
+Cloud Sync actualiza el nombre del grupo de agentes de datos.
+
+
+
+== Configuración unificada
+
+Si una relación de sincronización detecta errores durante el proceso de sincronización, la unificación de la concurrencia del grupo de Data broker puede ayudar a reducir el número de errores de sincronización. Tenga en cuenta que los cambios en la configuración del grupo pueden afectar al rendimiento ralentizando la transferencia.
+
+No recomendamos cambiar la configuración por su cuenta. Debe consultar con NetApp para saber cuándo cambiar la configuración y cómo modificarla.
+
+.Pasos
+. Haga clic en *gestionar agentes de datos*.
+. Haga clic en el icono Configuración de un grupo de Data broker.
++
+image:screenshot_sync_group_settings.png["Captura de pantalla que muestra el icono Configuración de un grupo de Data broker."]
+
+. Cambie la configuración según sea necesario y, a continuación, haga clic en *Unify Configuration*.
++
+Tenga en cuenta lo siguiente:
+
++
+** Puede seleccionar y elegir los ajustes que desea cambiar: No es necesario cambiar los cuatro a la vez.
+** Después de enviar una nueva configuración a un agente de datos, el Data broker se reinicia automáticamente y utiliza la nueva configuración.
+** Puede tardar hasta que este cambio se realice y sea visible en la interfaz de Cloud Sync.
+** Si un agente de datos no se está ejecutando, su configuración no cambiará porque Cloud Sync no se puede comunicar con él. La configuración cambiará después de reiniciar el Data broker.
+** Una vez establecida una configuración unificada, los nuevos agentes de datos utilizarán automáticamente la nueva configuración.
+
+
+
+
+
+
+== Mueva los agentes de datos entre grupos
+
+Si necesita acelerar el rendimiento del grupo de intermediarios de datos de destino, mueva un agente de datos de un grupo a otro.
+
+Por ejemplo, si un agente de datos ya no gestiona una relación de sincronización, puede moverla fácilmente a otro grupo que esté gestionando las relaciones de sincronización.
+
+.Limitaciones
+* Si un grupo de Data broker gestiona una relación de sincronización y sólo hay un agente de datos en el grupo, no podrá mover dicho agente de datos a otro grupo.
+* No se puede mover un agente de datos a un grupo que gestione relaciones de sincronización cifradas ni desde él.
+* No puede mover un agente de datos que se esté implementando actualmente.
+
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en image:screenshot_sync_group_expand.gif["Captura de pantalla del botón que permite ampliar la lista de agentes de datos de un grupo."] para ampliar la lista de agentes de datos de un grupo.
+. Haga clic en el menú de acción de un agente de datos y seleccione *mover agente de datos*.
++
+image:screenshot_sync_group_remove.png["Captura de pantalla del menú de acción disponible para cada grupo de Data broker individual."]
+
+. Cree un nuevo grupo de Data broker o seleccione un grupo de Data broker existente.
+. Haga clic en *mover*.
+
+
+.Resultado
+Cloud Sync traslada el agente de datos a un grupo de agente de datos nuevo o existente. Si no hay otros agentes de datos en el grupo anterior, Cloud Sync lo elimina.
+
+
+
+== Actualice la configuración del proxy
+
+Actualice la configuración de proxy de un agente de datos agregando detalles sobre una nueva configuración de proxy o editando la configuración de proxy existente.
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en image:screenshot_sync_group_expand.gif["Captura de pantalla del botón que permite ampliar la lista de agentes de datos de un grupo."] para ampliar la lista de agentes de datos de un grupo.
+. Haga clic en el menú de acción de un agente de datos y seleccione *Editar configuración de proxy*.
+. Especifique detalles sobre el proxy: Nombre de host, número de puerto, nombre de usuario y contraseña.
+. Haga clic en *Actualizar*.
+
+
+.Resultado
+Cloud Sync actualiza el agente de datos para utilizar la configuración de proxy para el acceso a Internet.
+
+
+
+== Ver la configuración de un agente de datos
+
+Puede que desee ver detalles sobre un agente de datos para identificar elementos como su nombre de host, dirección IP, CPU y RAM disponibles, entre otros.
+
+Cloud Sync ofrece los siguientes detalles acerca de un agente de datos:
+
+* Información básica: ID de instancia, nombre de host, etc.
+* Red: Región, red, subred, IP privada, etc.
+* Software: Distribución Linux, versión de data broker, etc.
+* Hardware: CPU y RAM
+* Configuración: Detalles acerca de los dos tipos de procesos principales del agente de datos: Escáner y transferrer
++
+
+TIP: El escáner escanea el origen y el destino y decide qué se debe copiar. El transferrer realiza la copia real. Es posible que el personal de NetApp utilice estos detalles de configuración para sugerir acciones que puedan optimizar el rendimiento.
+
+
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en image:screenshot_sync_group_expand.gif["Captura de pantalla del botón que permite ampliar la lista de agentes de datos de un grupo."] para ampliar la lista de agentes de datos de un grupo.
+. Haga clic en image:screenshot_sync_group_expand.gif["Captura de pantalla del botón que le permite ampliar los detalles sobre un agente de datos."] para ver detalles sobre un data broker.
++
+image:screenshot_sync_data_broker_details.gif["Captura de pantalla de información sobre un agente de datos."]
+
+
+
+
+
+== Solución de problemas con un agente de datos
+
+Cloud Sync muestra un estado para cada agente de datos que puede ayudarle a solucionar problemas.
+
+.Pasos
+. Identifique los agentes de datos con el estado "Unknown" o "Failed".
++
+image:screenshot_sync_broker_status.gif["Una captura de pantalla del estado de Cloud Sync donde un agente de datos tiene un estado \"desconocido\""]
+
+. Pase el ratón sobre image:screenshot_sync_status_icon.gif["Un icono \"info\""] para ver el motivo del fallo.
+. Corrija el problema.
++
+Por ejemplo, es posible que tenga que reiniciar simplemente el agente de datos si está desconectado o puede que necesite eliminar el agente de datos si la implementación inicial ha fallado.
+
+
+
+
+
+== Quitar un agente de datos de un grupo
+
+Puede quitar un agente de datos de un grupo si ya no es necesario o si la implementación inicial ha fallado. Esta acción solo elimina el agente de datos de los registros de Cloud Sync. Deberá eliminar manualmente el agente de datos y los recursos de cloud adicionales usted mismo.
+
+.Cosas que usted debe saber
+* Cloud Sync elimina un grupo cuando elimina el último intermediario de datos del grupo.
+* No se puede eliminar el último agente de datos de un grupo si existe una relación utilizando ese grupo.
+
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en image:screenshot_sync_group_expand.gif["Captura de pantalla del botón que permite ampliar la lista de agentes de datos de un grupo."] para ampliar la lista de agentes de datos de un grupo.
+. Haga clic en el menú de acción de un agente de datos y seleccione *Quitar agente de datos*.
++
+image:screenshot_sync_group_remove.gif["Captura de pantalla del menú de acción disponible para cada grupo de Data broker individual."]
+
+. Haga clic en *Quitar Data Broker*.
+
+
+.Resultado
+Cloud Sync quita el agente de datos del grupo.
+
+
+
+== Eliminar un grupo de Data broker
+
+Si un grupo de agentes de datos ya no gestiona ninguna relación de sincronización, puede eliminar el grupo, que elimina todos los agentes de datos de Cloud Sync.
+
+Los agentes de datos que Cloud Sync elimina solo se eliminan de los registros de Cloud Sync. Deberá eliminar manualmente la instancia de agente de datos de su proveedor de cloud y los recursos adicionales de cloud.
+
+.Pasos
+. Haga clic en *Sincronizar > gestionar agentes de datos*.
+. Haga clic en el menú de acción y seleccione *Eliminar grupo*.
++
+image:screenshot_sync_group_add.png["Captura de pantalla del menú de acción disponible para cada agente de datos individual de un grupo."]
+
+. Para confirmar, introduzca el nombre del grupo y haga clic en *Eliminar grupo*.
+
+
+.Resultado
+Cloud Sync elimina los intermediarios de datos y elimina el grupo.

@@ -1,0 +1,16 @@
+---
+layout: astra 
+sidebar: sidebar 
+permalink: index.html 
+lead: Cloud Sync is a cloud replication and synchronization service for transferring NAS data between on-premises and cloud object stores. 
+summary: Cloud Sync es un servicio de replicación y sincronización de cloud para transferir datos NAS entre almacenes de objetos en las instalaciones y en el cloud. 
+---
+= Documentación de Cloud Sync
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+

@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: task-quick-start.html 
+keywords: quick start, overview, deploying, getting started, get started, signing up, free trial 
+summary: Primeros pasos en el servicio Cloud Sync incluyen algunos pasos. 
+---
+= Inicio rápido de Cloud Sync
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+Primeros pasos en el servicio Cloud Sync incluyen algunos pasos.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Uno"] Inicie sesión y configure BlueXP
+[role="quick-margin-para"]
+Debería haber comenzado con BlueXP, que incluye el inicio de sesión, la configuración de una cuenta y posiblemente la implementación de un conector y la creación de entornos de trabajo.
+
+[role="quick-margin-para"]
+Si desea crear relaciones de sincronización para cualquiera de las siguientes, primero debe crear o detectar un entorno de trabajo:
+
+[role="quick-margin-list"]
+* Amazon FSX para ONTAP
+* Azure NetApp Files
+* Cloud Volumes ONTAP
+* Clústeres de ONTAP en las instalaciones
+
+
+[role="quick-margin-para"]
+Se requiere un conector para Cloud Volumes ONTAP, clústeres de ONTAP en las instalaciones y Amazon FSX para ONTAP.
+
+[role="quick-margin-list"]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-overview.html["Aprenda a comenzar con BlueXP"^]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-connectors.html["Más información sobre conectores"^]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Dos"] Prepare el origen y el destino
+[role="quick-margin-para"]
+Compruebe que el origen y el destino son compatibles y están configurados. El requisito más importante es verificar la conectividad entre el grupo de agentes de datos y las ubicaciones de origen y destino.
+
+[role="quick-margin-list"]
+* link:reference-supported-relationships.html["Consulte las relaciones admitidas"]
+* link:reference-requirements.html["Preparar el origen y el destino"]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tres"] Prepare una ubicación para el agente de datos de NetApp
+[role="quick-margin-para"]
+El software de agente de datos de NetApp sincroniza los datos de un origen con un destino (lo que se denomina _Sync Relationship_). Puede ejecutar el agente de datos en AWS, Azure, Google Cloud Platform o en sus instalaciones. Un grupo de agentes de datos, que consta de uno o más agentes de datos, necesita una conexión a Internet saliente a través del puerto 443 para poder comunicarse con el servicio Cloud Sync y ponerse en contacto con otros servicios y repositorios. link:reference-networking.html#networking-endpoints["Consulte la lista de extremos"].
+
+[role="quick-margin-para"]
+Cloud Sync le guía por el proceso de instalación cuando crea una relación de sincronización, en cuyo momento puede implementar un agente de datos en el cloud o descargar un script de instalación para su propio host Linux.
+
+[role="quick-margin-list"]
+* link:task-installing-aws.html["Revise la instalación de AWS"]
+* link:task-installing-azure.html["Revise la instalación de Azure"]
+* link:task-installing-gcp.html["Revise la instalación de Google Cloud"]
+* link:task-installing-linux.html["Revise la instalación del host Linux"]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Cuatro"] Cree su primera relación de sincronización
+[role="quick-margin-para"]
+Inicie sesión en https://console.bluexp.netapp.com/["BlueXP"^], haga clic en *Sincronizar* y, a continuación, arrastre y suelte las selecciones para el origen y el destino. Siga las indicaciones para completar la configuración. link:task-creating-relationships.html["Leer más"].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Cinco"] Pague por sus relaciones de sincronización una vez que finalice su prueba gratuita
+[role="quick-margin-para"]
+Suscríbase a AWS o Azure para pagar según el uso o anualmente. O adquiera licencias directamente a NetApp. Sólo tiene que ir a la página Configuración de licencia de Cloud Sync para configurarlo. link:task-licensing.html["Leer más"].

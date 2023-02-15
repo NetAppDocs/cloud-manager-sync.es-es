@@ -1,0 +1,212 @@
+---
+sidebar: sidebar 
+permalink: task-creating-relationships.html 
+keywords: sync, relationship, create, tags, settings, create a relationship, creating relationships, bucket setup, tags 
+summary: Al crear una relación de sincronización, el servicio Cloud Sync copia los archivos del origen al destino. Después de la copia inicial, el servicio sincroniza los datos modificados cada 24 horas. 
+---
+= Creación de relaciones de sincronización
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Al crear una relación de sincronización, el servicio Cloud Sync copia los archivos del origen al destino. Después de la copia inicial, el servicio sincroniza los datos modificados cada 24 horas.
+
+Antes de crear algunos tipos de relaciones de sincronización, primero tendrá que crear un entorno de trabajo en BlueXP.
+
+
+
+== Crear relaciones de sincronización para tipos específicos de entornos de trabajo
+
+Si desea crear relaciones de sincronización para cualquiera de las siguientes, primero debe crear o detectar el entorno de trabajo:
+
+* Amazon FSX para ONTAP
+* Azure NetApp Files
+* Cloud Volumes ONTAP
+* Clústeres de ONTAP en las instalaciones
+
+
+.Pasos
+. Crear o detectar el entorno de trabajo.
++
+** https://docs.netapp.com/us-en/cloud-manager-fsx-ontap/start/task-getting-started-fsx.html["Cree un entorno de trabajo de Amazon FSX para ONTAP"^]
+** https://docs.netapp.com/us-en/cloud-manager-azure-netapp-files/task-quick-start.html["Configuración y detección de Azure NetApp Files"^]
+** https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-deploying-otc-aws.html["Inicio de Cloud Volumes ONTAP en AWS"^]
+** https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-deploying-otc-azure.html["Inicio de Cloud Volumes ONTAP en Azure"^]
+** https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-deploying-gcp.html["Lanzamiento de Cloud Volumes ONTAP en Google Cloud"^]
+** https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-adding-systems.html["Añadiendo sistemas Cloud Volumes ONTAP existentes"^]
+** https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Detección de clústeres de ONTAP"^]
+
+
+. Haga clic en *Canvas*.
+. Seleccione un entorno de trabajo que coincida con cualquiera de los tipos indicados anteriormente.
+. Seleccione el menú de acción situado junto a Sincronizar.
++
+image:screenshot_sync_we.gif["Captura de pantalla que muestra las acciones disponibles en el menú sincronización después de seleccionar un entorno de trabajo."]
+
+. Seleccione *Sincronizar datos de esta ubicación* o *Sincronizar datos a esta ubicación* y siga las indicaciones para configurar la relación de sincronización.
+
+
+
+
+== Cree otros tipos de relaciones de sincronización
+
+Siga estos pasos para sincronizar datos en un tipo de almacenamiento compatible distinto de Amazon FSX para clústeres de ONTAP, Azure NetApp Files, Cloud Volumes ONTAP o ONTAP en las instalaciones. Los siguientes pasos proporcionan un ejemplo que muestra cómo configurar una relación de sincronización desde un servidor NFS a un bloque de S3.
+
+. En BlueXP, haga clic en *Sincronizar*.
+. En la página *definir relación de sincronización*, elija un origen y un destino.
++
+En los siguientes pasos se proporciona un ejemplo de cómo crear una relación de sincronización desde un servidor NFS hasta un bloque de S3.
+
++
+image:screenshot_nfs_to_s3.png["Una captura de pantalla que muestra NFS como origen y S3 como destino en una nueva relación de sincronización."]
+
+. En la página *servidor NFS*, introduzca la dirección IP o el nombre de dominio completo del servidor NFS que desea sincronizar con AWS.
+. En la página *Data Broker Group*, siga las indicaciones para crear una máquina virtual de Data Broker en AWS, Azure o Google Cloud Platform, o para instalar el software de Data Broker en un host Linux existente.
++
+Para obtener más información, consulte las siguientes páginas:
+
++
+** link:task-installing-aws.html["Crear un agente de datos en AWS"]
+** link:task-installing-azure.html["Cree un agente de datos en Azure"]
+** link:task-installing-gcp.html["Crear un agente de datos en Google Cloud"]
+** link:task-installing-linux.html["Instalar el agente de datos en un host Linux"]
+
+
+. Después de instalar el Data broker, haga clic en *continuar*.
++
+image:screenshot-data-broker-group.png["Esta captura de pantalla muestra una instancia implementada correctamente. La interfaz muestra detalles acerca de la instancia, incluidas las redes de AWS."]
+
+. [[filter]]en la página *directorios*, seleccione un directorio o subdirectorio de nivel superior.
++
+Si Cloud Sync no puede recuperar las exportaciones, haga clic en *Agregar exportación manualmente* e introduzca el nombre de una exportación NFS.
+
++
+
+NOTE: Si desea sincronizar más de un directorio en el servidor NFS, debe crear relaciones de sincronización adicionales una vez haya terminado.
+
+. En la página *AWS S3 Bucket*, seleccione un bloque:
++
+** Examine para seleccionar una carpeta existente dentro del bloque o para seleccionar una carpeta nueva que cree dentro del bloque.
+** Haga clic en *Agregar a la lista* para seleccionar un bloque de S3 que no esté asociado a su cuenta de AWS. link:reference-requirements.html#s3["Los permisos específicos se deben aplicar al bloque de S3"].
+
+
+. En la página *Configuración de bloque*, configure el cucharón:
++
+** Elija si desea habilitar el cifrado de bloque de S3 y, a continuación, seleccione una clave de AWS KMS, introduzca el ARN de una clave de KMS o seleccione el cifrado AES-256.
+** Seleccione una clase de almacenamiento S3. link:reference-supported-relationships.html#storage-classes["Consulte las clases de almacenamiento compatibles"].
++
+image:screenshot_bucket_setup.gif["Esta captura de pantalla muestra la página Bucket Setup, que le permite elegir Yes o no para el cifrado y seleccionar una clase de almacenamiento S3 específica para los datos sincronizados."]
+
+
+
+. [[Settings]]en la página *Settings*, defina cómo se sincronizan y mantienen los archivos y carpetas de origen en la ubicación de destino:
++
+Programación:: Elija una programación recurrente para sincronizar en el futuro o desactive la programación de sincronización. Puede programar una relación para que se sincronice datos con una frecuencia de hasta cada 1 minuto.
+Tiempo de espera de sincronización:: Defina si Cloud Sync debe cancelar una sincronización de datos si la sincronización no se ha completado en el número de horas o días especificado.
+Notificaciones:: Le permite elegir si desea recibir notificaciones de Cloud Sync en el Centro de notificación de BlueXP. Es posible habilitar notificaciones para que la sincronización de los datos se haya realizado correctamente, que no se hayan podido sincronizar los datos y que se haya cancelado.
+Reintentos:: Defina el número de veces que Cloud Sync debe volver a intentar sincronizar un archivo antes de omitirlo.
+Sincronización continua:: Después de la sincronización inicial de datos, Cloud Sync escucha los cambios en el bloque de S3 de origen o en el bloque de almacenamiento en cloud de Google y sincroniza continuamente cualquier cambio en el destino a medida que se producen. No es necesario volver a analizar el origen a intervalos programados.
++
+--
+Esta configuración solo está disponible cuando se crea una relación de sincronización y cuando se sincronizan datos de un bloque de S3 o Google Cloud Storage con el almacenamiento de Azure Blob, CIFS, Google Cloud Storage, IBM Cloud Object Storage, NFS, S3, Y StorageGRID * o* desde el almacenamiento de Azure Blob hasta el almacenamiento de Azure Blob, CIFS, Google Cloud Storage, IBM Cloud Object Storage, NFS y StorageGRID.
+
+Si activa esta configuración, afecta a otras funciones de la siguiente manera:
+
+** Se deshabilitó la programación de sincronización.
+** Los siguientes valores se revierten a sus valores predeterminados: Tiempo de espera de sincronización, Archivos modificados recientemente y Fecha de modificación.
+** Si S3 es el origen, el filtro por tamaño solo estará activo en eventos de copia (no al eliminar eventos).
+** Una vez creada la relación, solo se puede acelerar o eliminar. No puede cancelar la sincronización, modificar la configuración ni ver informes.
+
+
+--
+Comparar por:: Elija si Cloud Sync debe comparar ciertos atributos al determinar si un archivo o directorio ha cambiado y debe sincronizarse de nuevo.
++
+--
+Aunque desactive estos atributos, Cloud Sync seguirá comparando el origen con el destino comprobando las rutas de acceso, los tamaños de archivo y los nombres de archivo. Si hay cambios, sincroniza esos archivos y directorios.
+
+Puede habilitar o deshabilitar Cloud Sync si compara los siguientes atributos:
+
+** *Mtime*: La última hora de modificación de un archivo. Este atributo no es válido para directorios.
+** *Uid*, *gid* y *mode*: Indicadores de permisos para Linux.
+
+
+--
+Copiar para objetos:: Habilite esta opción para copiar etiquetas y metadatos de almacenamiento de objetos. Si un usuario cambia los metadatos del origen, Cloud Sync copia este objeto en la siguiente sincronización, pero si un usuario cambia las etiquetas del origen (y no los datos en sí), Cloud Sync no copia el objeto en la siguiente sincronización.
++
+--
+No se puede editar esta opción después de crear la relación.
+
+Se admiten las relaciones de copia de etiquetas, entre las que se incluyen Azure Blob o un extremo compatible con S3 (S3, StorageGRID o IBM Cloud Object Storage) como destino.
+
+Es compatible con las relaciones de "cloud a cloud" entre cualquiera de los siguientes extremos:
+
+** AWS S3
+** Azure Blob
+** Google Cloud Storage
+** Almacenamiento de objetos en cloud de IBM
+** StorageGRID
+
+
+--
+Archivos modificados recientemente:: Elija excluir los archivos que se modificaron recientemente antes de la sincronización programada.
+Eliminar archivos en el origen:: Elija eliminar archivos de la ubicación de origen después de que Cloud Sync copie los archivos en la ubicación de destino. Esta opción incluye el riesgo de pérdida de datos porque los archivos de origen se eliminan una vez copiados.
++
+--
+Si habilita esta opción, también debe cambiar un parámetro en el archivo local.json del agente de datos. Abra el archivo y actualícelo del siguiente modo:
+
+[source, json]
+----
+{
+"workers":{
+"transferrer":{
+"delete-on-source": true
+}
+}
+}
+----
+--
+Eliminar archivos en destino:: Elija eliminar archivos de la ubicación de destino, si se eliminaron del origen. El valor predeterminado es no eliminar nunca los archivos de la ubicación de destino.
+Tipos de archivo:: Defina los tipos de archivo que se van a incluir en cada sincronización: Archivos, directorios y enlaces simbólicos.
+Excluir extensiones de archivo:: Especifique las extensiones de archivo que desea excluir de la sincronización escribiendo la extensión de archivo y pulsando *Intro*. Por ejemplo, escriba _log_ o _.log_ para excluir archivos *.log. No es necesario un separador para varias extensiones. El siguiente vídeo proporciona una breve demostración:
++
+--
+video::video_file_extensions.mp4[width=840,height=240]
+--
+Excluir nombres de directorio:: Especifique un máximo de 15 directorios para excluir de la sincronización escribiendo su nombre y pulsando *Intro*. Los directorios .copy-fload, .snapshot, ~snapshot se excluyen de forma predeterminada. Si desea incluirlas en su sincronización, póngase en contacto con nosotros.
+Tamaño de archivo:: Elija sincronizar todos los archivos independientemente de su tamaño o sólo los archivos que se encuentren en un rango de tamaño específico.
+Fecha de modificación:: Elija todos los archivos independientemente de su fecha de última modificación, los archivos modificados después de una fecha específica, antes de una fecha específica o entre un intervalo de tiempo.
+Fecha de creación:: Cuando un servidor SMB es el origen, esta configuración le permite sincronizar archivos que se crearon después de una fecha específica, antes de una fecha específica o entre un rango de hora específico.
+ACL - Lista de control de acceso:: Copiar ACL de un servidor SMB habilitando una configuración cuando se crea una relación o después de crear una relación.
+
+
+. En la página *Etiquetas/metadatos*, elija si desea guardar un par clave-valor como una etiqueta en todos los archivos transferidos al bloque de S3 o si desea asignar un par clave-valor de metadatos en todos los archivos.
++
+image:screenshot_relationship_tags.png["Captura de pantalla que muestra la página Etiquetas/metadatos al crear una relación de sincronización con Amazon S3."]
+
++
+
+TIP: Esta misma función está disponible cuando se sincroniza datos con StorageGRID o el almacenamiento de objetos en el cloud de IBM. Para Azure y Google Cloud Storage, solo está disponible la opción de metadatos.
+
+. Revise los detalles de la relación de sincronización y haga clic en *Crear relación*.
+
+
+*resultado*
+
+Cloud Sync inicia la sincronización de datos entre el origen y el destino.
+
+
+
+== Cree relaciones de sincronización desde Cloud Data Sense
+
+Cloud Sync se integra con Cloud Data Sense. Desde detección de datos, puede seleccionar los archivos de origen que desea sincronizar con una ubicación de destino mediante Cloud Sync.
+
+Después de iniciar una sincronización de datos desde Cloud Data Sense, toda la información de origen se encuentra en un único paso y solo requiere que introduzca unos cuantos detalles clave. A continuación, elija la ubicación de destino para la nueva relación de sincronización.
+
+image:screenshot-sync-data-sense.png["Una captura de pantalla que muestra la página de integración de detección de datos que aparece tras iniciar una nueva sincronización directamente desde Cloud Data Sense."]
+
+https://docs.netapp.com/us-en/cloud-manager-data-sense/task-managing-highlights.html#copying-and-synchronizing-source-files-to-a-target-system["Descubra cómo iniciar una relación de sincronización desde Cloud Data Sense"^].

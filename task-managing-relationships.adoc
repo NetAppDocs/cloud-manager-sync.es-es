@@ -1,0 +1,207 @@
+---
+sidebar: sidebar 
+permalink: task-managing-relationships.html 
+keywords: sync, immediate, now, schedule, minutes, hours, on, off, delete, group, accelerate, accelerating, grouping, multiple data brokers, sync now, turn off, turn on, sync schedule, settings, change settings, recently modified files, delete files on target, retries, retry, file types, exclude file type, include file type, delete relationship 
+summary: Puede gestionar las relaciones de sincronización en cualquier momento sincronizando de forma inmediata datos, cambiando programaciones y mucho más. 
+---
+= Gestión de relaciones de sincronización
+:toc: macro
+:hardbreaks:
+:allow-uri-read: 
+:toc: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+:toc-position: content
+
+
+[role="lead"]
+Puede gestionar las relaciones de sincronización en cualquier momento sincronizando de forma inmediata datos, cambiando programaciones y mucho más.
+
+
+
+== Realice una sincronización inmediata de datos
+
+En lugar de esperar a la siguiente sincronización programada, puede pulsar un botón para sincronizar inmediatamente los datos entre la fuente y el destino.
+
+.Pasos
+. Desde *Dashboard*, desplácese hasta la relación de sincronización y haga clic en image:icon-sync-action.png["Captura de pantalla del botón que le permite realizar acciones en una relación de sincronización"]
+. Haga clic en *Sincronizar ahora* y, a continuación, en *Sincronizar* para confirmar.
+
+
+.Resultado
+Cloud Sync inicia el proceso de sincronización de datos para la relación.
+
+
+
+== Acelerando el rendimiento de la sincronización
+
+Acelere el rendimiento de una relación de sincronización añadiendo un agente de datos adicional al grupo que administra la relación. El agente de datos adicional debe ser un intermediario de datos _new_.
+
+.Cómo funciona
+Si el grupo de Data broker administra otras relaciones de sincronización, el nuevo Data broker que agregue al grupo también acelera el rendimiento de esas relaciones de sincronización.
+
+Por ejemplo, digamos que usted tiene tres relaciones:
+
+* La relación 1 está administrada por el grupo De Data broker A
+* La relación 2 es administrada por el grupo de Data broker B
+* La relación 3 está administrada por el grupo de Data broker A
+
+
+Desea acelerar el rendimiento de la relación 1 para agregar un nuevo agente de datos al grupo de intermediarios de datos A. Dado que el grupo A también gestiona la relación de sincronización 3, el rendimiento de sincronización de la relación se acelera automáticamente.
+
+.Pasos
+. Asegúrese de que al menos uno de los agentes de datos existentes en la relación esté en línea.
+. Desde *Dashboard*, desplácese hasta la relación de sincronización y haga clic en image:icon-sync-action.png["Captura de pantalla del botón que le permite realizar acciones en una relación de sincronización"]
+. Haga clic en *acelerar*.
+. Siga las indicaciones para crear un nuevo Data broker.
+
+
+.Resultado
+Cloud Sync agrega el nuevo agente de datos al grupo. Es necesario acelerar el rendimiento de la siguiente sincronización de datos.
+
+
+
+== Actualizando credenciales
+
+Puede actualizar el agente de datos con las credenciales más recientes del origen o destino en una relación de sincronización existente. La actualización de las credenciales puede ayudar si las políticas de seguridad requieren que actualice las credenciales de forma periódica.
+
+Las credenciales para actualizar son compatibles con cualquier origen o destino que Cloud Sync requiera credenciales para: Azure Blob, Box, IBM Cloud Object Storage, StorageGRID, ONTAP S3 Storage, SFTP y servidores SMB.
+
+.Pasos
+. En *Consola de sincronización*, vaya a una relación de sincronización que requiere credenciales y, a continuación, haga clic en *Actualizar credenciales*.
++
+image:screenshot_sync_update_credentials.png["Captura de pantalla que muestra la opción Actualizar credenciales en la página Relaciones de sincronización justo debajo del nombre del origen o destino."]
+
+. Introduzca las credenciales y haga clic en *Actualizar*.
++
+Una nota sobre los servidores SMB: Si el dominio es nuevo, deberá especificarlo al actualizar las credenciales. Si el dominio no ha cambiado, no es necesario volver a introducirlo.
+
++
+Si introdujo un dominio al crear la relación de sincronización, pero no introduce un dominio nuevo al actualizar las credenciales, Cloud Sync seguirá utilizando el dominio original que ha proporcionado.
+
+
+
+.Resultado
+Cloud Sync actualiza las credenciales del agente de datos. Puede tardar hasta 10 que el agente de datos comience a usar las credenciales actualizadas para sincronizar los datos.
+
+
+
+== Configuración de notificaciones
+
+Una configuración de *Notificaciones* para cada relación de sincronización permite elegir si desea recibir notificaciones de Cloud Sync en el Centro de notificación de BlueXP. Es posible habilitar notificaciones para que la sincronización de los datos se haya realizado correctamente, que no se hayan podido sincronizar los datos y que se haya cancelado.
+
+image:https://raw.githubusercontent.com/NetAppDocs/cloud-manager-sync/main/media/screenshot-notification-center.png["Una captura de pantalla que muestra el Centro de notificaciones en BlueXP."]
+
+Además, también puede recibir notificaciones por correo electrónico.
+
+.Pasos
+. Modifique la configuración de una relación de sincronización:
++
+.. Desde *Dashboard*, desplácese hasta la relación de sincronización y haga clic en image:icon-sync-action.png["Captura de pantalla del botón que le permite realizar acciones en una relación de sincronización"]
+.. Haga clic en *Configuración*.
+.. Activar *Notificaciones*.
+.. Haga clic en *Guardar configuración*.
+
+
+. Si desea recibir notificaciones por correo electrónico, configure los ajustes de alerta y notificaciones:
++
+.. Haga clic en *Configuración > Configuración de alertas y notificaciones*.
+.. Seleccione un usuario o varios usuarios y elija el tipo de notificación *Info*.
+.. Haga clic en *aplicar*.
+
+
+
+
+.Resultado
+Ahora recibirá notificaciones de Cloud Sync en el Centro de notificaciones de BlueXP, con unas notificaciones que llegan por correo electrónico, si configuró esta opción.
+
+
+
+== Cambiar la configuración de una relación de sincronización
+
+Modifique la configuración que define cómo se sincronizan y mantienen los archivos y carpetas de origen en la ubicación de destino.
+
+. Desde *Dashboard*, desplácese hasta la relación de sincronización y haga clic en image:icon-sync-action.png["Captura de pantalla del botón que le permite realizar acciones en una relación de sincronización"]
+. Haga clic en *Configuración*.
+. Modifique cualquiera de los ajustes.
++
+image:screenshot_sync_settings.png["Captura de pantalla que muestra la configuración de una relación de sincronización."]
+
++
+[[deleteonsource]] aquí hay una breve descripción de cada configuración:
+
++
+Programación:: Elija una programación recurrente para sincronizar en el futuro o desactive la programación de sincronización. Puede programar una relación para que se sincronice datos con una frecuencia de hasta cada 1 minuto.
+Tiempo de espera de sincronización:: Defina si Cloud Sync debe cancelar una sincronización de datos si la sincronización no se ha completado en el número de horas o días especificado.
+Notificaciones:: Le permite elegir si desea recibir notificaciones de Cloud Sync en el Centro de notificación de BlueXP. Es posible habilitar notificaciones para que la sincronización de los datos se haya realizado correctamente, que no se hayan podido sincronizar los datos y que se haya cancelado.
++
+--
+Si desea recibir notificaciones para
+
+--
+Reintentos:: Defina el número de veces que Cloud Sync debe volver a intentar sincronizar un archivo antes de omitirlo.
+Comparar por:: Elija si Cloud Sync debe comparar ciertos atributos al determinar si un archivo o directorio ha cambiado y debe sincronizarse de nuevo.
++
+--
+Aunque desactive estos atributos, Cloud Sync seguirá comparando el origen con el destino comprobando las rutas de acceso, los tamaños de archivo y los nombres de archivo. Si hay cambios, sincroniza esos archivos y directorios.
+
+Puede habilitar o deshabilitar Cloud Sync si compara los siguientes atributos:
+
+** *Mtime*: La última hora de modificación de un archivo. Este atributo no es válido para directorios.
+** *Uid*, *gid* y *mode*: Indicadores de permisos para Linux.
+
+
+--
+Copiar para objetos:: No se puede editar esta opción después de crear la relación.
+Archivos modificados recientemente:: Elija excluir los archivos que se modificaron recientemente antes de la sincronización programada.
+Eliminar archivos en el origen:: Elija eliminar archivos de la ubicación de origen después de que Cloud Sync copie los archivos en la ubicación de destino. Esta opción incluye el riesgo de pérdida de datos porque los archivos de origen se eliminan una vez copiados.
++
+--
+Si habilita esta opción, también debe cambiar un parámetro en el archivo local.json del agente de datos. Abra el archivo y actualícelo del siguiente modo:
+
+[source, json]
+----
+{
+"workers":{
+"transferrer":{
+"delete-on-source": true
+}
+}
+}
+----
+--
+Eliminar archivos en destino:: Elija eliminar archivos de la ubicación de destino, si se eliminaron del origen. El valor predeterminado es no eliminar nunca los archivos de la ubicación de destino.
+Tipos de archivo:: Defina los tipos de archivo que se van a incluir en cada sincronización: Archivos, directorios y enlaces simbólicos.
+Excluir extensiones de archivo:: Especifique las extensiones de archivo que desea excluir de la sincronización escribiendo la extensión de archivo y pulsando *Intro*. Por ejemplo, escriba _log_ o _.log_ para excluir archivos *.log. No es necesario un separador para varias extensiones. El siguiente vídeo proporciona una breve demostración:
++
+--
+video::video_file_extensions.mp4[width=840,height=240]
+--
+Excluir nombres de directorio:: Especifique un máximo de 15 directorios para excluir de la sincronización escribiendo su nombre y pulsando *Intro*. Los directorios .copy-fload, .snapshot, ~snapshot se excluyen de forma predeterminada. Si desea incluirlas en su sincronización, póngase en contacto con nosotros.
+Tamaño de archivo:: Elija sincronizar todos los archivos independientemente de su tamaño o sólo los archivos que se encuentren en un rango de tamaño específico.
+Fecha de modificación:: Elija todos los archivos independientemente de su fecha de última modificación, los archivos modificados después de una fecha específica, antes de una fecha específica o entre un intervalo de tiempo.
+Fecha de creación:: Cuando un servidor SMB es el origen, esta configuración le permite sincronizar archivos que se crearon después de una fecha específica, antes de una fecha específica o entre un rango de hora específico.
+ACL - Lista de control de acceso:: Copiar ACL de un servidor SMB habilitando una configuración cuando se crea una relación o después de crear una relación.
+
+
+. Haga clic en *Guardar configuración*.
+
+
+.Resultado
+Cloud Sync modifica la relación de sincronización con las nuevas opciones de configuración.
+
+
+
+== Eliminar relaciones
+
+Puede eliminar una relación de sincronización si ya no necesita sincronizar datos entre el origen y el destino. Esta acción no elimina el grupo de Data broker (o las instancias individuales de data broker) y no elimina los datos del destino.
+
+.Pasos
+. Desde *Dashboard*, desplácese hasta la relación de sincronización y haga clic en image:icon-sync-action.png["Captura de pantalla del botón que le permite realizar acciones en una relación de sincronización"]
+. Haga clic en *Eliminar* y, a continuación, vuelva a hacer clic en *Eliminar* para confirmar.
+
+
+.Resultado
+Cloud Sync elimina la relación de sincronización.

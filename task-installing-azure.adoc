@@ -1,0 +1,213 @@
+---
+sidebar: sidebar 
+permalink: task-installing-azure.html 
+keywords: data broker, install, azure, networking, permissions, regions, install data broker in azure, install in azure, deploy in azure, deploy data broker in azure, networking requirements, port, ports, 443, port 443, ntp, network time protocol, azure data broker 
+summary: Al crear un nuevo agente de datos, elija la opción de Azure Data Broker para implementar el software de agente de datos en una nueva máquina virtual en un vnet. Cloud Sync le guía durante el proceso de instalación, pero en esta página se repiten los requisitos y los pasos que le ayudarán a preparar la instalación. 
+---
+= Creación de un nuevo agente de datos en Azure
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Al crear un nuevo grupo de agentes de datos, elija Microsoft Azure para implementar el software de Data broker en una nueva máquina virtual en un vnet. Cloud Sync le guía durante el proceso de instalación, pero en esta página se repiten los requisitos y los pasos que le ayudarán a preparar la instalación.
+
+También tiene la opción de instalar el agente de datos en un host Linux existente en el cloud o en sus instalaciones. link:task-installing-linux.html["Leer más"].
+
+
+
+== Regiones de Azure compatibles
+
+Todas las regiones cuentan con el apoyo de las regiones de China, la gobernadora de los Estados Unidos y el Departamento de Defensa de los Estados Unidos.
+
+
+
+== Privilegios de usuario raíz
+
+El software de Data broker se ejecuta automáticamente como root en el host Linux. Ejecutar como root es un requisito para las operaciones de data broker. Por ejemplo, para montar recursos compartidos.
+
+
+
+== Requisitos de red
+
+* El agente de datos necesita una conexión saliente a Internet para que pueda sondear el servicio Cloud Sync para las tareas a través del puerto 443.
++
+Cuando Cloud Sync implementa el agente de datos en Azure, crea un grupo de seguridad que permite la comunicación saliente necesaria.
+
++
+Si necesita limitar la conectividad saliente, consulte link:reference-networking.html["lista de puntos finales con los que se contacta el data broker"].
+
+* NetApp recomienda configurar el origen, el destino y el intermediario de datos para utilizar un servicio de protocolo de tiempo de redes (NTP). La diferencia de tiempo entre los tres componentes no debe superar los 5 minutos.
+
+
+
+
+== Permisos necesarios para implementar el agente de datos en Azure
+
+Asegúrese de que la cuenta de usuario de Azure que utilice para implementar el agente de datos tenga los siguientes permisos:
+
+[source, json]
+----
+{
+    "Name": "Azure Data Broker",
+    "Actions": [
+					"Microsoft.Resources/subscriptions/read",
+                    "Microsoft.Resources/deployments/operationstatuses/read",
+                    "Microsoft.Resources/subscriptions/locations/read",
+                    "Microsoft.Network/networkInterfaces/read",
+                    "Microsoft.Network/virtualNetworks/subnets/read",
+                    "Microsoft.Resources/subscriptions/resourceGroups/write",
+                    "Microsoft.Resources/subscriptions/resourceGroups/delete",
+                    "Microsoft.Resources/deployments/write",
+                    "Microsoft.Resources/deployments/validate/action",
+                    "Microsoft.Resources/deployments/operationStatuses/read",
+                    "Microsoft.Resources/deployments/cancel/action",
+                    "Microsoft.Compute/virtualMachines/read",
+                    "Microsoft.Compute/virtualMachines/delete",
+                    "Microsoft.Compute/disks/delete",
+                    "Microsoft.Network/networkInterfaces/delete",
+                    "Microsoft.Network/publicIPAddresses/delete",
+                    "Microsoft.Network/networkSecurityGroups/securityRules/delete",
+                    "Microsoft.Resources/subscriptions/resourceGroups/write",
+                    "Microsoft.Compute/virtualMachines/delete",
+                    "Microsoft.Network/networkSecurityGroups/write",
+                    "Microsoft.Network/networkSecurityGroups/join/action",
+                    "Microsoft.Compute/disks/write",
+                    "Microsoft.Network/networkInterfaces/write",
+                    "Microsoft.Network/virtualNetworks/read",
+                    "Microsoft.Network/publicIPAddresses/write",
+                    "Microsoft.Compute/virtualMachines/write",
+                    "Microsoft.Compute/virtualMachines/extensions/write",
+                    "Microsoft.Resources/deployments/read",
+                    "Microsoft.Network/networkSecurityGroups/read",
+                    "Microsoft.Network/publicIPAddresses/read",
+                    "Microsoft.Network/virtualNetworks/subnets/join/action",
+                    "Microsoft.Network/publicIPAddresses/join/action",
+                    "Microsoft.Network/networkInterfaces/join/action",
+                    "Microsoft.Storage/storageAccounts/read",
+                    "Microsoft.EventGrid/systemTopics/eventSubscriptions/write",
+                    "Microsoft.EventGrid/systemTopics/eventSubscriptions/read",
+                    "Microsoft.EventGrid/systemTopics/eventSubscriptions/delete",
+                    "Microsoft.EventGrid/systemTopics/eventSubscriptions/getFullUrl/action",
+                    "Microsoft.EventGrid/systemTopics/eventSubscriptions/getDeliveryAttributes/action",
+                    "Microsoft.EventGrid/systemTopics/read",
+                    "Microsoft.EventGrid/systemTopics/write",
+                    "Microsoft.EventGrid/systemTopics/delete",
+                    "Microsoft.EventGrid/eventSubscriptions/write",
+                    "Microsoft.Storage/storageAccounts/write"
+----
+....
+    ],
+    "NotActions": [],
+    "AssignableScopes": [],
+    "Description": "Azure Data Broker",
+    "IsCustom": "true"
+}
+....
+Nota:
+
+. Los siguientes permisos solo son necesarios si tiene pensado habilitar la configuración de sincronización continua en una relación de sincronización de Azure con otra ubicación de almacenamiento en cloud:
++
+** "Microsoft.Storage/storageAccounts/read",
+** 'Microsoft.EventGrid/systemTopics/eventSubscriptions/Write',
+** 'Microsoft.EventGrid/systemTopics/eventSubscriptions/read',
+** 'Microsoft.EventGrid/systemTopics/eventSubscriptions/DELETE',
+** 'Microsoft.EventGrid/systemTopics/eventSubscriptions/getFullUrl/action',
+** 'Microsoft.EventGrid/systemTopics/eventSubscriptions/getDeliveryAttributes/action',
+** 'Microsoft.EventGrid/systemTopics/Read',
+** 'Microsoft.EventGrid/systemTopics/Write',
+** 'Microsoft.EventGrid/systemTopics/DELETE',
+** 'Microsoft.EventGrid/eventSubscriptions/Write',
+** 'Microsoft.almacenamiento/cuentas de almacenamiento/escritura'
+
+
++
+Además, el ámbito asignable debe definirse en el ámbito de suscripción y el ámbito del grupo de recursos *no* si tiene previsto implementar Continuous Sync en Azure.
+
+
+
+https://docs.netapp.com/us-en/cloud-manager-sync/task-creating-relationships.html#settings["Obtenga más información acerca de la configuración de sincronización continua"].
+
+
+
+== Método de autenticación
+
+Al implementar el agente de datos, tendrá que elegir un método de autenticación para la máquina virtual: Una contraseña o un par de claves público-privadas SSH.
+
+Para obtener ayuda sobre la creación de un par de claves, consulte https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys["Documentación de Azure: Cree y utilice una pareja de claves SSH público-privada para máquinas virtuales de Linux en Azure"^].
+
+
+
+== Creación del agente de datos
+
+Hay varias formas de crear un nuevo agente de datos. Estos pasos describen cómo instalar un agente de datos en Azure al crear una relación de sincronización.
+
+.Pasos
+. Haga clic en *Crear nueva sincronización*.
+. En la página *definir relación de sincronización*, elija un origen y un destino y haga clic en *continuar*.
++
+Complete los pasos hasta llegar a la página *Grupo de agentes de datos*.
+
+. En la página *Grupo de agentes de datos*, haga clic en *Crear agente de datos* y, a continuación, seleccione *Microsoft Azure*.
++
+image:screenshot-azure.png["Captura de pantalla de la página Data Broker que le permita elegir entre AWS, Azure, Google Cloud y un agente de datos en las instalaciones."]
+
+. Introduzca un nombre para el Data broker y haga clic en *continuar*.
+. Si se le solicita, inicie sesión en su cuenta de Microsoft. Si no se le solicita, haga clic en *Iniciar sesión en Azure*.
++
+El formulario es propiedad de Microsoft y está alojado en él. Sus credenciales no se proporcionan a NetApp.
+
+. Elija una ubicación para el agente de datos e introduzca detalles básicos sobre la máquina virtual.
++
+image:screenshot_azure_data_broker.gif["Una captura de pantalla de la página de implementación de Azure que muestra los siguientes campos: Suscripción, región de Azure, red, subred, nombre de máquina virtual, nombre de usuario, método de autenticación y grupo de recursos."]
+
++
+
+NOTE: Si planea implementar una relación de sincronización continua, debe asignar una función personalizada a su agente de datos. También se puede realizar manualmente después de crear el broker.
+
+. Especifique una configuración de proxy, si se requiere un proxy para el acceso a Internet en la vnet.
+. Haga clic en *continuar* y mantenga la página abierta hasta que finalice la implementación.
++
+El proceso puede tardar hasta 7 minutos.
+
+. En Cloud Sync, haga clic en *continuar* una vez que el Data broker esté disponible.
+. Complete las páginas del asistente para crear la nueva relación de sincronización.
+
+
+.Resultado
+Ha puesto en marcha un agente de datos en Azure y creado una nueva relación de sincronización. Puede utilizar este Data broker con relaciones de sincronización adicionales.
+
+.¿obtiene un mensaje acerca de cómo se necesita el consentimiento de administrador?
+****
+Si Microsoft le notifica que se requiere la aprobación del administrador porque Cloud Sync necesita permiso para acceder a los recursos de la organización en su nombre, dispone de dos opciones:
+
+. Pida a su administrador de AD que le proporcione los siguientes permisos:
++
+En Azure, vaya a *Centros de administración > Azure AD > usuarios y grupos > Configuración de usuario* y active *los usuarios pueden dar su consentimiento a las aplicaciones que acceden a los datos de la empresa en su nombre*.
+
+. Pida a su administrador de AD que consiente en su nombre *CloudSync-AzureDataBrokerCreator* utilizando la siguiente URL (éste es el punto final del consentimiento de administración):
++
+\https://login.microsoftonline.com/{FILL AQUÍ su ID DE INQUILINO}/v2.0/adminconsent?client_id=8ee4ca3a-bafa-4831-97cc-5a38923cab85&redirect_uri=https://cloudsync.netapp.com&scope=https://management.azure.com/user_impersonationhttps://graph.microsoft.com/User.Read
+
++
+Como se muestra en la URL, nuestra URL de aplicación es \https://cloudsync.netapp.com y el ID de cliente de aplicación es 8ee4ca3a-bafa-4831-97cc-5a38923cab85.
+
+
+
+****
+
+
+== Información sobre el equipo virtual de Data broker
+
+Cloud Sync crea un agente de datos en Azure utilizando la siguiente configuración.
+
+Tipo de máquina virtual:: Estándar DS4 v2
+VCPU:: 8
+RAM:: 28 GB
+De NetApp:: Rocky Linux 9.0
+Tamaño y tipo del disco:: SSD Premium de 64 GB
+

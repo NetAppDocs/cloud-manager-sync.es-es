@@ -1,0 +1,99 @@
+---
+sidebar: sidebar 
+permalink: task-managing-reports.html 
+keywords: reports, sync reports, cloud sync reports, report errors, path reports 
+summary: Cree y vea informes para obtener información que puede usar con la ayuda del personal de NetApp para ajustar la configuración de un agente de datos y mejorar el rendimiento. 
+---
+= Creación y visualización de informes para ajustar la configuración
+:toc: macro
+:hardbreaks:
+:allow-uri-read: 
+:toc: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+:toc-position: content
+
+
+[role="lead"]
+Cree y vea informes para obtener información que puede usar con la ayuda del personal de NetApp para ajustar la configuración de un agente de datos y mejorar el rendimiento.
+
+Cada informe proporciona detalles en profundidad sobre una ruta en una relación de sincronización. Por ejemplo, el informe de un sistema de archivos muestra cuántos directorios y archivos hay, la distribución del tamaño de los archivos, la profundidad y el ancho de los directorios y mucho más.
+
+
+
+== Crear informes
+
+Cada vez que se crea un informe, Cloud Sync analiza la ruta y compila los detalles en un informe.
+
+.Pasos
+. Haga clic en *Sincronizar > Informes*.
++
+Las rutas (origen o destino) de cada una de las relaciones de sincronización se muestran en una tabla.
+
+. En la columna *acciones de Informes*, vaya a una ruta de acceso específica y haga clic en *Crear*, o haga clic en el menú de acciones y seleccione *Crear nuevo*.
+. Cuando el informe esté listo, haga clic en el menú de acciones y seleccione *Ver*.
++
+Aquí tiene un informe de ejemplo para una ruta de acceso al sistema de archivos.
+
++
+image:screenshot_sync_report.gif["Un informe que muestra la cantidad de elementos de sincronización, el tamaño del archivo, los máximos, el tiempo de acceso, el tiempo de cambio, y modificar la hora."]
+
++
+Y aquí tiene un informe de ejemplo para el almacenamiento de objetos.
+
++
+image:screenshot_sync_report_object.gif["Informe que muestra el número de elementos de ruta de acceso, el tamaño de los objetos, la hora de modificación y la clase de almacenamiento."]
+
+
+
+
+
+== Descargando informes
+
+Puede descargar un informe en PDF para poder verlo sin conexión o compartirlo.
+
+.Pasos
+. Haga clic en *Sincronizar > Informes*.
+. En la columna *acciones de informes*, haga clic en el menú de acciones y seleccione *Ver*.
+. En la parte superior derecha del informe, haga clic en el menú de acción y seleccione *Descargar pdf*.
++
+image:screenshot-sync-download-report.png["Una captura de pantalla de la opción Descargar pdf que aparece después de hacer clic en el menú de acción de un informe."]
+
+
+
+
+
+== Ver errores de informe
+
+La tabla de rutas de acceso identifica si hay algún error en el informe más reciente. Un error identifica un problema que Cloud Sync enfrentó al analizar la ruta.
+
+Por ejemplo, un informe puede contener errores de permiso denegado. Este tipo de error puede afectar a la capacidad de Cloud Sync para analizar todo el conjunto de archivos y directorios.
+
+Después de ver la lista de errores, puede abordar los problemas y volver a ejecutar el informe.
+
+.Pasos
+. Haga clic en *Sincronizar > Informes*.
+. En la columna *errores*, identifique si hay algún error presente en un informe.
+. Si hay errores, haga clic en la flecha situada junto al número de errores.
++
+image:screenshot_sync_report_errors.gif["Captura de pantalla de la tabla Paths que muestra el número de errores y una pequeña flecha para hacer clic en la columna Errors."]
+
+. Utilice la información del error para corregir el problema.
++
+Después de resolver el problema, el error no debería aparecer la próxima vez que ejecute el informe.
+
+
+
+
+
+== Eliminar informes
+
+Puede eliminar un informe que contenía un error corregido o si el informe está relacionado con una relación de sincronización que ha eliminado.
+
+.Pasos
+. Haga clic en *Sincronizar > Informes*.
+. En la columna *acciones de Informes*, haga clic en el menú de acciones de una ruta y seleccione *Eliminar último informe* o *Eliminar todos los informes*.
+. Confirme que desea eliminar el informe o los informes.
+
