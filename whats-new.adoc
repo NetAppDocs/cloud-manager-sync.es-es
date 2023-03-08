@@ -18,6 +18,18 @@ Descubra las novedades de Cloud Sync.
 
 
 
+== 7 de marzo de 2023
+
+
+
+=== Cifrado EBS para agentes de datos de AWS
+
+Ahora puede cifrar volúmenes de agentes de datos de AWS mediante una clave KMS desde su cuenta.
+
+https://docs.netapp.com/us-en/cloud-manager-sync/task-installing-aws.html#creating-the-data-broker["Obtenga más información sobre cómo crear un agente de datos en AWS"].
+
+
+
 == 5 de febrero de 2023
 
 

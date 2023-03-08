@@ -93,12 +93,12 @@ Si prefiere no proporcionar claves de acceso, haga clic en el vínculo situado e
 
 +
 video::video_cloud_sync.mp4[width=848,height=480]
-. Si introdujo una clave de acceso de AWS, seleccione una ubicación para la instancia, seleccione un par de claves, elija si desea habilitar una dirección IP pública y, a continuación, seleccione un rol de IAM existente o deje el campo en blanco para que Cloud Sync cree el rol para usted.
+. Si introdujo una clave de acceso de AWS, seleccione una ubicación para la instancia, seleccione un par de claves, elija si desea habilitar una dirección IP pública y seleccione un rol de IAM existente o deje el campo vacío para que Cloud Sync cree el rol para usted. También tiene la opción de cifrar el agente de datos con una clave KMS.
 +
 Si elige su propio rol de IAM, <<iam,deberá proporcionar los permisos necesarios>>.
 
 +
-image:screenshot_aws_data_broker.gif["Una captura de pantalla de la información que debe proporcionar al implementar un agente de datos en AWS."]
+image:screenshot_aws_data_broker.png["Una captura de pantalla de la información que debe proporcionar al implementar un agente de datos en AWS."]
 
 . Especifique una configuración de proxy, si se requiere un proxy para el acceso a Internet en el VPC.
 . Después de que el Data broker esté disponible, haga clic en *continuar* en Cloud Sync.
