@@ -22,11 +22,12 @@ Cuando crea un nuevo grupo de agentes de datos, elija la opción On-Prem Data Br
 
 * *sistema operativo*:
 +
-** CentOS 7.0, 7.7 y 8.0
+** CentOS 8.0 y 8.5
 +
 CentOS Stream no es compatible.
 
-** Red Hat Enterprise Linux 7.7 y 8.0
+** Red Hat Enterprise Linux 8.0 y 8.5
+** Rocky Linux 9
 ** Sistema operativo Ubuntu Server 20.04 LTS
 ** SUSE Linux Enterprise Server 15 SP1
 +

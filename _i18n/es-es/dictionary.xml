@@ -5,9 +5,7 @@
   <block id="e9b07c7994659b124430d0e4daaeabba" category="paragraph">Cuando crea un nuevo grupo de agentes de datos, elija la opción On-Prem Data Broker para instalar el software de agente de datos en un host Linux local o en un host Linux existente en el cloud. Cloud Sync le guía durante el proceso de instalación, pero en esta página se repiten los requisitos y los pasos que le ayudarán a preparar la instalación.</block>
   <block id="ace028fe1c5dc8fb39091440d89fd9fd" category="section-title">Requisitos del host Linux</block>
   <block id="17308c76959fcb971603b7274a57c128" category="list-text">*sistema operativo*:</block>
-  <block id="1a2698aea8c50e468148bb22c28bf853" category="list-text">CentOS 7.0, 7.7 y 8.0</block>
   <block id="735736a0904d4dd4641f1c0b6e93ac7a" category="paragraph">CentOS Stream no es compatible.</block>
-  <block id="438c134de8e5d04ae91ce2fc1f48f114" category="list-text">Red Hat Enterprise Linux 7.7 y 8.0</block>
   <block id="083265255bba92c059791cd3a9803274" category="list-text">Sistema operativo Ubuntu Server 20.04 LTS</block>
   <block id="473733802c02f67f489689f787461e62" category="list-text">SUSE Linux Enterprise Server 15 SP1</block>
   <block id="a855786065eb842829e76727ee601d59" category="paragraph">El comando<block ref="bcb2c9ba3070afceaf76b8ceb5e4a15b" prefix=" " category="inline-code"></block> debe ejecutarse en el host antes de instalar el agente de datos.</block>
@@ -1785,4 +1783,7 @@
   <block id="452cd4df7b0d5eb1156519a2f3b0206b" category="paragraph">Se trata de un ID generado por el sistema que se asigna a su correo electrónico. En la página *NSS Management*, puede mostrar su correo electrónico desde <block ref="0d0843f26c0819e5369f690fefbf68b7" category="inline-image-macro-rx" type="image"></block> de windows</block>
   <block id="fd02e84624a2fdfd58787131aa2820b5" category="list-text">Si alguna vez necesita actualizar sus tokens de credenciales de inicio de sesión, también hay una opción *Actualizar credenciales* en la <block ref="0d0843f26c0819e5369f690fefbf68b7" category="inline-image-macro-rx" type="image"></block> de windows</block>
   <block id="b14d512a3c64fb5df16f6721b0603c63" category="paragraph">Con esta opción se le solicita que vuelva a iniciar sesión. Tenga en cuenta que el token de estas cuentas caduca después de 90 días. Se enviará una notificación para avisarle de ello.</block>
+  <block id="deb96f2e04c20206372a663fc1e22a63" category="list-text">CentOS 8.0 y 8.5</block>
+  <block id="baefe41a5ed4db05fd518fa49dfbd17d" category="list-text">Red Hat Enterprise Linux 8.0 y 8.5</block>
+  <block id="cf76271f717860ca93c6825568b0690d" category="list-text">Rocky Linux 9</block>
 </blocks>
